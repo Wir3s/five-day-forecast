@@ -1,6 +1,14 @@
 var APIKey = "8ab624b5be3ff94ca14f406f1044e429";
 var city;
-
+var addLon;
+var addLat;
+var forecastURL =
+  "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+  addLat +
+  "&lon=" +
+  addLon +
+  "&appid=" +
+  APIKey;
 var searchButton = document.getElementById("cityButton");
 
 // fetch(queryURL)
@@ -14,18 +22,27 @@ searchButton.addEventListener("click", function () {
     city +
     "&limit=5&appid=" +
     APIKey;
+
   fetch(queryURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      console.log("Weather: Raw data \n----------");
       console.log(data);
-      console.log(data.current.feelslike_f);
+      console.log(data.coord.lon, data.coord.lat);
 
-      // var feelsLike = $("</p>").text(
-      //   "Right now it feels like " + data.current.feelslike_f + " degrees outside"
-      // );
-      // mainArea.append(feelsLike);
+      addLon = data.coord.lon;
+      addLat = data.coord.lat;
+      console.log(addLon, addLat);
+      console.log(JSON.stringify({ location: [city, addLon, addLat] }));
+      localStorage.setItem("location", JSON.stringify(city, addLon, addLat));
     });
 });
+
+// fetch(forecastURL)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       console.log(data);
+//     });
