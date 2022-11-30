@@ -1,18 +1,25 @@
 var APIKey = "8ab624b5be3ff94ca14f406f1044e429";
 var today = dayjs().format("MMM, D-YYYY");
 
+var searchFormEl = document.querySelector("#city-search");
 var currentWeather = document.querySelector("#weatherToday");
-var currentHeader = document.querySelector("currentHeader");
+
 var searchButton = document.getElementById("cityButton");
 
-// fetch(queryURL)
+// searchButton.addEventListener("click", function () {
+//   var searchInput = document.getElementById("requestedCity").value;
+//   currentWeather.innerHTML = "";
+//   console.log(searchInput);
+//   lookForCity(searchInput);
+// });
 
-searchButton.addEventListener("click", function () {
+var userSearch = function (event) {
+  event.preventDefault();
   var searchInput = document.getElementById("requestedCity").value;
-
+  currentWeather.innerHTML = "";
   console.log(searchInput);
   lookForCity(searchInput);
-});
+};
 
 var lookForCity = function (city) {
   var queryURL =
@@ -20,6 +27,13 @@ var lookForCity = function (city) {
     city +
     "&limit=5&appid=" +
     APIKey;
+
+  // var queryURL =
+  //   "http://api.openweathermap.org/geo/1.0/direct?q=" +
+  //   city +
+  //   "&limit=5&appid=" +
+  //   APIKey;
+
   console.log(queryURL);
   fetch(queryURL)
     .then(function (response) {
@@ -48,6 +62,8 @@ var lookForCity = function (city) {
     });
 };
 
+// Five Day Forecast
+
 var getFiveDay = function (lat, lon) {
   console.log(lat, lon);
   var forecastURL =
@@ -68,25 +84,4 @@ var getFiveDay = function (lat, lon) {
   });
 };
 
-// .then(function (data) {
-//
-
-//
-//       console.log(addLon, addLat);
-//       console.log(forecastURL);
-//       var cities = document.getElementById("cityList");
-//       var newLink = document.createElement("p");
-//       newLink.innerHTML += "<a " + forecastURL + ">" + city + "</a>";
-//       cities.appendChild(newLink);
-
-//       localStorage.setItem("coords", forecastURL);
-//     });
-// });
-
-// fetch(forecastURL)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       console.log(data);
-//     });
+searchFormEl.addEventListener("submit", userSearch);
