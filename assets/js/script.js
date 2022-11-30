@@ -1,11 +1,15 @@
 var APIKey = "8ab624b5be3ff94ca14f406f1044e429";
+var today = dayjs().format("MMM, D-YYYY");
 
+var currentWeather = document.querySelector("#weatherToday");
+var currentHeader = document.querySelector("currentHeader");
 var searchButton = document.getElementById("cityButton");
 
 // fetch(queryURL)
 
 searchButton.addEventListener("click", function () {
   var searchInput = document.getElementById("requestedCity").value;
+
   console.log(searchInput);
   lookForCity(searchInput);
 });
@@ -23,6 +27,16 @@ var lookForCity = function (city) {
         console.log(response);
         response.json().then(function (data) {
           console.log(data);
+          console.log(data.weather[0].icon);
+          var weatherIcon =
+            "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+          console.log(weatherIcon);
+          var cityHeader = document.createElement("h1");
+          var wIcon = document.createElement("img");
+          wIcon.src = weatherIcon;
+          cityHeader.textContent = data.name + " " + today;
+          currentWeather.appendChild(cityHeader);
+          cityHeader.appendChild(wIcon);
           getFiveDay(data.coord.lat, data.coord.lon);
         });
       } else {
