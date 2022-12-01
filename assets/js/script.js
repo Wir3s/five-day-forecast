@@ -79,9 +79,17 @@ var getFiveDay = function (lat, lon) {
       console.log(response);
       response.json().then(function (data) {
         console.log(data);
+        console.log(data.list);
+        console.log(data.city.name);
+        displayFive(data.list, data.city.name);
       });
     }
   });
+};
+
+var displayFive = function (fiveDayArray, cityName) {
+  console.log(fiveDayArray);
+  console.log(cityName);
 };
 
 searchFormEl.addEventListener("submit", userSearch);
