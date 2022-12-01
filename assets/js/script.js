@@ -47,10 +47,24 @@ var lookForCity = function (city) {
           console.log(weatherIcon);
           var cityHeader = document.createElement("h1");
           var wIcon = document.createElement("img");
+          var otherWeather = document.createElement("h2");
           wIcon.src = weatherIcon;
           cityHeader.textContent = data.name + " " + today;
           currentWeather.appendChild(cityHeader);
           cityHeader.appendChild(wIcon);
+          console.log(data.main.temp);
+          otherWeather.textContent =
+            "Temp: " +
+            data.main.temp +
+            " Kelvin" +
+            "Wind: " +
+            data.wind.speed +
+            " MPH" +
+            " " +
+            "Humidity: " +
+            data.main.humidity +
+            "%";
+          cityHeader.appendChild(otherWeather);
           getFiveDay(data.coord.lat, data.coord.lon);
         });
       } else {
@@ -90,6 +104,18 @@ var getFiveDay = function (lat, lon) {
 var displayFive = function (fiveDayArray, cityName) {
   console.log(fiveDayArray);
   console.log(cityName);
+  console.log(fiveDayArray);
+
+  // for (var i = 7; i <= 39; i += 8) {
+  //   var fiveIcons =
+  //     "http://openweathermap.org/img/w/" +
+  //     fiveDayArray[i].weather[0].icon +
+  //     ".png";
+  //
+  // var fiveBox = document.createElement("div");
+  // var lilIcons = document.createElement("img");
+
+  // }
 };
 
 searchFormEl.addEventListener("submit", userSearch);
