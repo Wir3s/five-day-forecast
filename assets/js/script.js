@@ -1,10 +1,10 @@
 var APIKey = "8ab624b5be3ff94ca14f406f1044e429";
-var today = dayjs().format("MMM, D-YYYY");
+var today = dayjs().format("M/D/YYYYY");
 
 var searchFormEl = document.querySelector("#city-search");
 var currentWeather = document.querySelector("#weatherToday");
-
 var searchButton = document.getElementById("cityButton");
+var forecastBoxesEl = document.getElementById("five-day-boxes");
 
 // searchButton.addEventListener("click", function () {
 //   var searchInput = document.getElementById("requestedCity").value;
@@ -57,6 +57,7 @@ var lookForCity = function (city) {
             "Temp: " +
             data.main.temp +
             " Kelvin" +
+            " " +
             "Wind: " +
             data.wind.speed +
             " MPH" +
@@ -111,10 +112,14 @@ var displayFive = function (fiveDayArray, cityName) {
   //     "http://openweathermap.org/img/w/" +
   //     fiveDayArray[i].weather[0].icon +
   //     ".png";
-  //
-  // var fiveBox = document.createElement("div");
-  // var lilIcons = document.createElement("img");
 
+  //   var fiveBox = document.createElement("div");
+  //   fiveBox.classList.add("col");
+  //   forecastBoxesEl.appendChild(fiveBox);
+  //   // var lilList = document.createElement("ul");
+  //   // var lilItem = document.createElement("li");
+  //   var lilIcons = document.createElement("img");
+  //   lilIcons.src = fiveIcons;
   // }
 };
 
