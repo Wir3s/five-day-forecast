@@ -5,14 +5,19 @@ var searchFormEl = document.querySelector("#city-search");
 var currentWeather = document.querySelector("#weatherToday");
 var searchButton = document.getElementById("cityButton");
 var forecastBoxesEl = document.getElementById("five-day-boxes");
+var cityListEl = document.getElementById("city-list");
 
-// searchButton.addEventListener("click", function () {
-//   var searchInput = document.getElementById("requestedCity").value;
-//   currentWeather.innerHTML = "";
-//   console.log(searchInput);
-//   lookForCity(searchInput);
-// });
+// Display prior searches
+// function retrieveCity() {
 
+//   var cityList = JSON.parse(localStorage.getItem("city"));
+//   for (var i = 0; i < cityList.length; i++) {
+//     var cityButtonEl = document.createElement("button");
+
+//   }
+// }
+
+// Input city name
 var userSearch = function (event) {
   event.preventDefault();
   var searchInput = document.getElementById("requestedCity").value;
@@ -21,18 +26,13 @@ var userSearch = function (event) {
   lookForCity(searchInput);
 };
 
+// Fetch city data, display current weather and pass latitude and longitude information
 var lookForCity = function (city) {
   var queryURL =
     "http://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&limit=5&appid=" +
     APIKey;
-
-  // var queryURL =
-  //   "http://api.openweathermap.org/geo/1.0/direct?q=" +
-  //   city +
-  //   "&limit=5&appid=" +
-  //   APIKey;
 
   console.log(queryURL);
   fetch(queryURL)
@@ -77,8 +77,7 @@ var lookForCity = function (city) {
     });
 };
 
-// Five Day Forecast
-
+// Fetch Five Day Forecast information
 var getFiveDay = function (lat, lon) {
   console.log(lat, lon);
   var forecastURL =
@@ -96,31 +95,58 @@ var getFiveDay = function (lat, lon) {
         console.log(data);
         console.log(data.list);
         console.log(data.city.name);
+        //      saveCity(data.city.name);
         displayFive(data.list, data.city.name);
       });
     }
   });
 };
 
+// Save City to local storage
+// function saveCity(cityName) {
+//   var savedCities = JSON.parse(localStorage.getItem("city"));
+//   newCityList = savedCities + cityName;
+//   localStorage.setItem("city", JSON.stringify(newCityList));
+//   console.log(JSON.parse(localStorage.getItem("city")));
+// }
+
+// Display five day forecast
 var displayFive = function (fiveDayArray, cityName) {
   console.log(fiveDayArray);
   console.log(cityName);
   console.log(fiveDayArray);
 
-  // for (var i = 7; i <= 39; i += 8) {
-  //   var fiveIcons =
-  //     "http://openweathermap.org/img/w/" +
-  //     fiveDayArray[i].weather[0].icon +
-  //     ".png";
+  for (var i = 7; i <= 39; i += 8) {
+    var fiveContent =
+      "Temp: " +
+      fiveDayArray[i].main.temp +
+      " Kelvin" +
+      " " +
+      "Wind: " +
+      fiveDayArray[i].wind.speed +
+      " MPH" +
+      " " +
+      "Humidity: " +
+      fiveDayArray[i].main.humidity +
+      "%";
+    console.log(fiveContent);
+    var fiveIcons =
+      "http://openweathermap.org/img/w/" +
+      fiveDayArray[i].weather[0].icon +
+      ".png";
+    console.log(fiveIcons);
 
-  //   var fiveBox = document.createElement("div");
-  //   fiveBox.classList.add("col");
-  //   forecastBoxesEl.appendChild(fiveBox);
-  //   // var lilList = document.createElement("ul");
-  //   // var lilItem = document.createElement("li");
-  //   var lilIcons = document.createElement("img");
-  //   lilIcons.src = fiveIcons;
-  // }
+    var fiveBox = document.createElement("div");
+    var lilIcons = document.createElement("img");
+    var fiveHead = document.createElement("h3");
+    lilIcons.src = fiveIcons;
+    fiveHead.textContent = fiveContent;
+    fiveBox.classList.add("col");
+    forecastBoxesEl.appendChild(fiveBox);
+    fiveBox.appendChild(lilIcons);
+    fiveBox.appendChild(fiveHead);
+  }
 };
 
+// retrieveCity();
 searchFormEl.addEventListener("submit", userSearch);
