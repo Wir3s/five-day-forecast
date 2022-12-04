@@ -17,6 +17,12 @@ var cityListEl = document.getElementById("city-list");
 //   }
 // }
 
+   // Generate forecast dates, save in array?
+  //  for (var i = 1; i <= 5; i++) {
+  //   var date = new Date();
+  //   date.setDate(date.getDate() + i);
+  // }
+
 // Input city name
 var userSearch = function (event) {
   event.preventDefault();
@@ -32,7 +38,7 @@ var lookForCity = function (city) {
   var queryURL =
     "http://api.openweathermap.org/data/2.5/weather?q=" +
     city +
-    "&limit=5&appid=" +
+    "&units=imperial&limit=5&appid=" +
     APIKey;
 
   console.log(queryURL);
@@ -50,6 +56,7 @@ var lookForCity = function (city) {
           var wIcon = document.createElement("img");
           var otherWeather = document.createElement("h2");
           wIcon.src = weatherIcon;
+          currentWeather.style.visibility = "visible";
           cityHeader.textContent = data.name + " " + today;
           currentWeather.appendChild(cityHeader);
           cityHeader.appendChild(wIcon);
@@ -57,7 +64,7 @@ var lookForCity = function (city) {
           otherWeather.textContent =
             "Temp: " +
             data.main.temp +
-            " Kelvin" +
+            " \u2109" +
             " " +
             "Wind: " +
             data.wind.speed +
@@ -86,6 +93,7 @@ var getFiveDay = function (lat, lon) {
     lat +
     "&lon=" +
     lon +
+    "&units=imperial" +
     "&appid=" +
     APIKey;
   console.log(forecastURL);
@@ -96,7 +104,6 @@ var getFiveDay = function (lat, lon) {
         console.log(data);
         console.log(data.list);
         console.log(data.city.name);
-        //    saveCity(data.city.name);
         displayFive(data.list, data.city.name);
       });
     }
@@ -119,12 +126,13 @@ var displayFive = function (fiveDayArray, cityName) {
   console.log(fiveDayArray);
   console.log(cityName);
   console.log(fiveDayArray);
+ 
 
   for (var i = 7; i <= 39; i += 8) {
     var fiveContent =
       "Temp: " +
       fiveDayArray[i].main.temp +
-      " Kelvin" +
+      " \u2109" +
       " " +
       "Wind: " +
       fiveDayArray[i].wind.speed +
