@@ -8,18 +8,23 @@ var forecastBoxesEl = document.getElementById("five-day-boxes");
 var cityListEl = document.getElementById("city-list");
 
 // Display prior searches
-// function retrieveCity() {
-//   var cityList = JSON.parse(localStorage.getItem("city"));
-//   for (var i = 0; i < cityList.length; i++) {
-//     var cityButtonEl = document.createElement("button");
-//   }
-// }
+function retrieveCity() {
+  var cityList = JSON.parse(localStorage.getItem("city")) || [];
+  for (var i = 0; i < cityList.length; i++) {
+    var cityButtonEl = document.createElement("button");
+    console.log(cityList[i]);
+    cityButtonEl.innerHTML = cityList[i];
+    cityListEl.appendChild(cityButtonEl);
+  }
+}
 
 // Input city name
 var userSearch = function (event) {
   event.preventDefault();
   var searchInput = document.getElementById("requestedCity").value;
   currentWeather.innerHTML = "";
+  forecastBoxesEl.innerHTML = "";
+  cityListEl.innerHTML = "";
   console.log(searchInput);
   lookForCity(searchInput);
   saveCity(searchInput);
@@ -110,6 +115,7 @@ function saveCity(cityName) {
   savedCities = savedCities.concat([cityName]);
   localStorage.setItem("city", JSON.stringify(savedCities));
   console.log(JSON.parse(localStorage.getItem("city")));
+  retrieveCity();
 }
 
 // Display five day forecast
@@ -123,20 +129,7 @@ var displayFive = function (fiveDayArray, cityName) {
     var fiveTemp = "Temp: " + fiveDayArray[i].main.temp + " \u2109";
     var fiveWind = "Wind: " + fiveDayArray[i].wind.speed + " MPH";
     var fiveHum = "Humidity: " + fiveDayArray[i].main.humidity + "%";
-    // var fiveContent =
-    //   fiveDayArray[i].dt_txt +
-    //   "Temp: " +
-    //   fiveDayArray[i].main.temp +
-    //   " \u2109" +
-    //   " " +
-    //   "Wind: " +
-    //   fiveDayArray[i].wind.speed +
-    //   " MPH" +
-    //   " " +
-    //   "Humidity: " +
-    //   fiveDayArray[i].main.humidity +
-    //   "%";
-    // console.log(fiveContent);
+
     var fiveIcons =
       "http://openweathermap.org/img/w/" +
       fiveDayArray[i].weather[0].icon +
@@ -149,8 +142,10 @@ var displayFive = function (fiveDayArray, cityName) {
     var listEl = document.createElement("ul");
     var listItemDate = document.createElement("li");
     var listItemTemp = document.createElement("li");
+    var listItemWind = document.createElement("li");
+    var listItemHum = document.createElement("li");
     lilIcons.src = fiveIcons;
-    //   fiveHead.textContent = fiveContent;
+    // listEl.style.list.type = "none";
     fiveBox.classList.add("col");
     forecastBoxesEl.appendChild(fiveBox);
     fiveBox.appendChild(lilIcons);
@@ -160,8 +155,12 @@ var displayFive = function (fiveDayArray, cityName) {
     listEl.appendChild(listItemDate);
     listItemTemp.textContent = fiveTemp;
     listEl.appendChild(listItemTemp);
+    listItemWind.textContent = fiveWind;
+    listEl.appendChild(listItemWind);
+    listItemHum.textContent = fiveHum;
+    listEl.appendChild(listItemHum);
   }
 };
 
-// retrieveCity();
+retrieveCity();
 searchFormEl.addEventListener("submit", userSearch);
