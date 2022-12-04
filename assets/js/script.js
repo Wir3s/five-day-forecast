@@ -9,19 +9,11 @@ var cityListEl = document.getElementById("city-list");
 
 // Display prior searches
 // function retrieveCity() {
-
 //   var cityList = JSON.parse(localStorage.getItem("city"));
 //   for (var i = 0; i < cityList.length; i++) {
 //     var cityButtonEl = document.createElement("button");
-
 //   }
 // }
-
-   // Generate forecast dates, save in array?
-  //  for (var i = 1; i <= 5; i++) {
-  //   var date = new Date();
-  //   date.setDate(date.getDate() + i);
-  // }
 
 // Input city name
 var userSearch = function (event) {
@@ -126,22 +118,26 @@ var displayFive = function (fiveDayArray, cityName) {
   console.log(fiveDayArray);
   console.log(cityName);
   console.log(fiveDayArray);
- 
 
   for (var i = 7; i <= 39; i += 8) {
-    var fiveContent =
-      "Temp: " +
-      fiveDayArray[i].main.temp +
-      " \u2109" +
-      " " +
-      "Wind: " +
-      fiveDayArray[i].wind.speed +
-      " MPH" +
-      " " +
-      "Humidity: " +
-      fiveDayArray[i].main.humidity +
-      "%";
-    console.log(fiveContent);
+    var fiveDate = fiveDayArray[i].dt_txt;
+    var fiveTemp = "Temp: " + fiveDayArray[i].main.temp + " \u2109";
+    var fiveWind = "Wind: " + fiveDayArray[i].wind.speed + " MPH";
+    var fiveHum = "Humidity: " + fiveDayArray[i].main.humidity + "%";
+    // var fiveContent =
+    //   fiveDayArray[i].dt_txt +
+    //   "Temp: " +
+    //   fiveDayArray[i].main.temp +
+    //   " \u2109" +
+    //   " " +
+    //   "Wind: " +
+    //   fiveDayArray[i].wind.speed +
+    //   " MPH" +
+    //   " " +
+    //   "Humidity: " +
+    //   fiveDayArray[i].main.humidity +
+    //   "%";
+    // console.log(fiveContent);
     var fiveIcons =
       "http://openweathermap.org/img/w/" +
       fiveDayArray[i].weather[0].icon +
@@ -150,13 +146,18 @@ var displayFive = function (fiveDayArray, cityName) {
 
     var fiveBox = document.createElement("div");
     var lilIcons = document.createElement("img");
-    var fiveHead = document.createElement("h3");
+    var fiveHead = document.createElement("p");
+    var listEl = document.createElement("ul");
+    var listItem = document.createElement("li");
     lilIcons.src = fiveIcons;
-    fiveHead.textContent = fiveContent;
+    //   fiveHead.textContent = fiveContent;
     fiveBox.classList.add("col");
     forecastBoxesEl.appendChild(fiveBox);
     fiveBox.appendChild(lilIcons);
     fiveBox.appendChild(fiveHead);
+    fiveHead.appendChild(listEl);
+    listItem.textContent = fiveDate;
+    listEl.appendChild(listItem);
   }
 };
 
