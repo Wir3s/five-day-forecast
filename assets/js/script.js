@@ -24,6 +24,7 @@ var userSearch = function (event) {
   currentWeather.innerHTML = "";
   console.log(searchInput);
   lookForCity(searchInput);
+  saveCity(searchInput);
 };
 
 // Fetch city data, display current weather and pass latitude and longitude information
@@ -95,7 +96,7 @@ var getFiveDay = function (lat, lon) {
         console.log(data);
         console.log(data.list);
         console.log(data.city.name);
-        //      saveCity(data.city.name);
+        //    saveCity(data.city.name);
         displayFive(data.list, data.city.name);
       });
     }
@@ -103,12 +104,15 @@ var getFiveDay = function (lat, lon) {
 };
 
 // Save City to local storage
-// function saveCity(cityName) {
-//   var savedCities = JSON.parse(localStorage.getItem("city"));
-//   newCityList = savedCities + cityName;
-//   localStorage.setItem("city", JSON.stringify(newCityList));
-//   console.log(JSON.parse(localStorage.getItem("city")));
-// }
+function saveCity(cityName) {
+  var savedCities = [];
+  console.log(cityName);
+  savedCities = JSON.parse(localStorage.getItem("city"));
+  console.log(savedCities);
+  savedCities = savedCities.concat([cityName]);
+  localStorage.setItem("city", JSON.stringify(savedCities));
+  console.log(JSON.parse(localStorage.getItem("city")));
+}
 
 // Display five day forecast
 var displayFive = function (fiveDayArray, cityName) {
