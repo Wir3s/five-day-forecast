@@ -1,5 +1,5 @@
 var APIKey = "8ab624b5be3ff94ca14f406f1044e429";
-var today = dayjs().format("M/D/YYYYY");
+var today = dayjs().format("M/D/YYYY");
 
 var searchFormEl = document.querySelector("#city-search");
 var currentWeather = document.querySelector("#weatherToday");
@@ -43,7 +43,7 @@ var lookForCity = function (city) {
           console.log(data.weather[0].icon);
           var weatherIcon =
             "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-          console.log(weatherIcon);
+          console.log(today);
           var cityHeader = document.createElement("h1");
           var wIcon = document.createElement("img");
           var otherWeather = document.createElement("h2");
@@ -104,9 +104,8 @@ var getFiveDay = function (lat, lon) {
 
 // Save City to local storage
 function saveCity(cityName) {
-  var savedCities = [];
+  var savedCities = JSON.parse(localStorage.getItem("city")) || [];
   console.log(cityName);
-  savedCities = JSON.parse(localStorage.getItem("city"));
   console.log(savedCities);
   savedCities = savedCities.concat([cityName]);
   localStorage.setItem("city", JSON.stringify(savedCities));
@@ -148,7 +147,8 @@ var displayFive = function (fiveDayArray, cityName) {
     var lilIcons = document.createElement("img");
     var fiveHead = document.createElement("p");
     var listEl = document.createElement("ul");
-    var listItem = document.createElement("li");
+    var listItemDate = document.createElement("li");
+    var listItemTemp = document.createElement("li");
     lilIcons.src = fiveIcons;
     //   fiveHead.textContent = fiveContent;
     fiveBox.classList.add("col");
@@ -156,8 +156,10 @@ var displayFive = function (fiveDayArray, cityName) {
     fiveBox.appendChild(lilIcons);
     fiveBox.appendChild(fiveHead);
     fiveHead.appendChild(listEl);
-    listItem.textContent = fiveDate;
-    listEl.appendChild(listItem);
+    listItemDate.textContent = fiveDate;
+    listEl.appendChild(listItemDate);
+    listItemTemp.textContent = fiveTemp;
+    listEl.appendChild(listItemTemp);
   }
 };
 
