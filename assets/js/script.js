@@ -8,7 +8,7 @@ var forecastBoxesEl = document.getElementById("five-day-boxes");
 var cityListEl = document.getElementById("city-list");
 
 // Display prior searches
-function retrieveCity() {
+var retrieveCity = function () {
   var cityList = JSON.parse(localStorage.getItem("city")) || [];
   for (var i = 0; i < cityList.length; i++) {
     var cityButtonEl = document.createElement("button");
@@ -16,7 +16,16 @@ function retrieveCity() {
     cityButtonEl.innerHTML = cityList[i];
     cityListEl.appendChild(cityButtonEl);
   }
-}
+};
+
+// If city button is clicked, displays weather for that city
+var buttonClickHandler = function (event) {
+  var clickedCity = event.target.textContent;
+  console.log(clickedCity);
+  currentWeather.innerHTML = "";
+  forecastBoxesEl.innerHTML = "";
+  lookForCity(clickedCity);
+};
 
 // Input city name
 var userSearch = function (event) {
@@ -107,16 +116,17 @@ var getFiveDay = function (lat, lon) {
   });
 };
 
-// Save City to local storage
-function saveCity(cityName) {
+// Save city to local storage
+var saveCity = function (cityName) {
   var savedCities = JSON.parse(localStorage.getItem("city")) || [];
   console.log(cityName);
   console.log(savedCities);
   savedCities = savedCities.concat([cityName]);
   localStorage.setItem("city", JSON.stringify(savedCities));
   console.log(JSON.parse(localStorage.getItem("city")));
+
   retrieveCity();
-}
+};
 
 // Display five day forecast
 var displayFive = function (fiveDayArray, cityName) {
@@ -145,7 +155,6 @@ var displayFive = function (fiveDayArray, cityName) {
     var listItemWind = document.createElement("li");
     var listItemHum = document.createElement("li");
     lilIcons.src = fiveIcons;
-    // listEl.style.list.type = "none";
     fiveBox.classList.add("col");
     forecastBoxesEl.appendChild(fiveBox);
     fiveBox.appendChild(lilIcons);
@@ -164,3 +173,4 @@ var displayFive = function (fiveDayArray, cityName) {
 
 retrieveCity();
 searchFormEl.addEventListener("submit", userSearch);
+cityListEl.addEventListener("click", buttonClickHandler);
