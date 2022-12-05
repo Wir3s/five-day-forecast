@@ -17,7 +17,7 @@ var retrieveCity = function () {
   }
 };
 
-// If city button is clicked, displays weather for that city
+// If city button is clicked, displays weather for city
 var buttonClickHandler = function (event) {
   var clickedCity = event.target.textContent;
   currentWeather.innerHTML = "";
@@ -117,12 +117,12 @@ var displayFive = function (fiveDayArray, cityName) {
     var fiveTemp = "Temp: " + fiveDayArray[i].main.temp + " \u2109";
     var fiveWind = "Wind: " + fiveDayArray[i].wind.speed + " MPH";
     var fiveHum = "Humidity: " + fiveDayArray[i].main.humidity + "%";
-
+    // Icons for weather
     var fiveIcons =
       "http://openweathermap.org/img/w/" +
       fiveDayArray[i].weather[0].icon +
       ".png";
-
+    // Create html elements for five day forecast
     var fiveBox = document.createElement("div");
     var lilIcons = document.createElement("img");
     var fiveHead = document.createElement("p");
