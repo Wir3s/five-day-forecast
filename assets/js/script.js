@@ -12,7 +12,6 @@ var retrieveCity = function () {
   var cityList = JSON.parse(localStorage.getItem("city")) || [];
   for (var i = 0; i < cityList.length; i++) {
     var cityButtonEl = document.createElement("button");
-    console.log(cityList[i]);
     cityButtonEl.innerHTML = cityList[i];
     cityListEl.appendChild(cityButtonEl);
   }
@@ -21,7 +20,6 @@ var retrieveCity = function () {
 // If city button is clicked, displays weather for that city
 var buttonClickHandler = function (event) {
   var clickedCity = event.target.textContent;
-  console.log(clickedCity);
   currentWeather.innerHTML = "";
   forecastBoxesEl.innerHTML = "";
   lookForCity(clickedCity);
@@ -34,7 +32,6 @@ var userSearch = function (event) {
   currentWeather.innerHTML = "";
   forecastBoxesEl.innerHTML = "";
   cityListEl.innerHTML = "";
-  console.log(searchInput);
   lookForCity(searchInput);
   saveCity(searchInput);
 };
@@ -47,17 +44,12 @@ var lookForCity = function (city) {
     "&units=imperial&limit=5&appid=" +
     APIKey;
 
-  console.log(queryURL);
   fetch(queryURL)
     .then(function (response) {
       if (response.ok) {
-        console.log(response);
         response.json().then(function (data) {
-          console.log(data);
-          console.log(data.weather[0].icon);
           var weatherIcon =
             "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-          console.log(today);
           var cityHeader = document.createElement("h1");
           var wIcon = document.createElement("img");
           var otherWeather = document.createElement("h2");
@@ -66,7 +58,6 @@ var lookForCity = function (city) {
           cityHeader.textContent = data.name + " " + today;
           currentWeather.appendChild(cityHeader);
           cityHeader.appendChild(wIcon);
-          console.log(data.main.temp);
           otherWeather.textContent =
             "Temp: " +
             data.main.temp +
@@ -93,7 +84,6 @@ var lookForCity = function (city) {
 
 // Fetch Five Day Forecast information
 var getFiveDay = function (lat, lon) {
-  console.log(lat, lon);
   var forecastURL =
     "http://api.openweathermap.org/data/2.5/forecast?lat=" +
     lat +
@@ -102,14 +92,9 @@ var getFiveDay = function (lat, lon) {
     "&units=imperial" +
     "&appid=" +
     APIKey;
-  console.log(forecastURL);
   fetch(forecastURL).then(function (response) {
     if (response.ok) {
-      console.log(response);
       response.json().then(function (data) {
-        console.log(data);
-        console.log(data.list);
-        console.log(data.city.name);
         displayFive(data.list, data.city.name);
       });
     }
@@ -119,21 +104,14 @@ var getFiveDay = function (lat, lon) {
 // Save city to local storage
 var saveCity = function (cityName) {
   var savedCities = JSON.parse(localStorage.getItem("city")) || [];
-  console.log(cityName);
-  console.log(savedCities);
   savedCities = savedCities.concat([cityName]);
   localStorage.setItem("city", JSON.stringify(savedCities));
-  console.log(JSON.parse(localStorage.getItem("city")));
 
   retrieveCity();
 };
 
 // Display five day forecast
 var displayFive = function (fiveDayArray, cityName) {
-  console.log(fiveDayArray);
-  console.log(cityName);
-  console.log(fiveDayArray);
-
   for (var i = 7; i <= 39; i += 8) {
     var fiveDate = fiveDayArray[i].dt_txt;
     var fiveTemp = "Temp: " + fiveDayArray[i].main.temp + " \u2109";
@@ -144,7 +122,6 @@ var displayFive = function (fiveDayArray, cityName) {
       "http://openweathermap.org/img/w/" +
       fiveDayArray[i].weather[0].icon +
       ".png";
-    console.log(fiveIcons);
 
     var fiveBox = document.createElement("div");
     var lilIcons = document.createElement("img");
