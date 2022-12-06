@@ -22,17 +22,19 @@
     
     <div class="container">
         <div class="row" id="topRow">
-            <div class="col-2">
+            <div class="col-sm-auto">
                 <form id="city-search">
                     <label for="inputCity" class="form-label">Search for a city</label>
                     <input type="search"  id="requestedCity" class="form-control" aria-describedby="passwordHelpBlock">
                     <button type="submit" id="cityButton" class="btn btn-primary">Search</button>
                 </form>
-                <div id="city-list"></div>
+                <div>
+                    <ul id="city-list" class="list-group"></ul>
+                </div>
             </div>
-            <div class="col-10">
+            <div class="col">
                 <div id="weatherToday" class="border border-dark border-4" style="visibility:hidden"></div>          
-                    <div class="row" id="five-day-boxes"></div>
+                    <div class="row row-cols-auto" id="five-day-boxes"></div>
             </div>
         </div> 
     </div>

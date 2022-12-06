@@ -11,9 +11,12 @@ var cityListEl = document.getElementById("city-list");
 var retrieveCity = function () {
   var cityList = JSON.parse(localStorage.getItem("city")) || [];
   for (var i = 0; i < cityList.length; i++) {
+    var listOfCity = document.createElement("li");
+    listOfCity.classList.add("list-group-item");
     var cityButtonEl = document.createElement("button");
     cityButtonEl.innerHTML = cityList[i];
-    cityListEl.appendChild(cityButtonEl);
+    cityListEl.appendChild(listOfCity);
+    listOfCity.appendChild(cityButtonEl);
   }
 };
 
@@ -127,10 +130,15 @@ var displayFive = function (fiveDayArray) {
     var lilIcons = document.createElement("img");
     var fiveHead = document.createElement("p");
     var listEl = document.createElement("ul");
+    listEl.classList.add("list-group");
     var listItemDate = document.createElement("li");
+    listItemDate.classList.add("list-group-item");
     var listItemTemp = document.createElement("li");
+    listItemTemp.classList.add("list-group-item");
     var listItemWind = document.createElement("li");
+    listItemWind.classList.add("list-group-item");
     var listItemHum = document.createElement("li");
+    listItemHum.classList.add("list-group-item");
     lilIcons.src = fiveIcons;
     fiveBox.classList.add("col");
     forecastBoxesEl.appendChild(fiveBox);
