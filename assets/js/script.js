@@ -39,7 +39,7 @@ var userSearch = function (event) {
 // Fetch city data, display current weather and pass latitude and longitude information
 var lookForCity = function (city) {
   var queryURL =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&units=imperial&limit=5&appid=" +
     APIKey;
@@ -49,7 +49,7 @@ var lookForCity = function (city) {
       if (response.ok) {
         response.json().then(function (data) {
           var weatherIcon =
-            "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+            "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
           var cityHeader = document.createElement("h1");
           var wIcon = document.createElement("img");
           var otherWeather = document.createElement("h2");
@@ -85,7 +85,7 @@ var lookForCity = function (city) {
 // Fetch Five Day Forecast information
 var getFiveDay = function (lat, lon) {
   var forecastURL =
-    "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+    "https://api.openweathermap.org/data/2.5/forecast?lat=" +
     lat +
     "&lon=" +
     lon +
@@ -119,7 +119,7 @@ var displayFive = function (fiveDayArray) {
     var fiveHum = "Humidity: " + fiveDayArray[i].main.humidity + "%";
     // Icons for weather
     var fiveIcons =
-      "http://openweathermap.org/img/w/" +
+      "https://openweathermap.org/img/w/" +
       fiveDayArray[i].weather[0].icon +
       ".png";
     // Create html elements for five day forecast
