@@ -111,7 +111,7 @@ var saveCity = function (cityName) {
 };
 
 // Display five day forecast
-var displayFive = function (fiveDayArray, cityName) {
+var displayFive = function (fiveDayArray) {
   for (var i = 7; i <= 39; i += 8) {
     var fiveDate = fiveDayArray[i].dt_txt;
     var fiveTemp = "Temp: " + fiveDayArray[i].main.temp + " \u2109";
